@@ -1,0 +1,11 @@
+{
+  "name": "cmg-news",
+  "version": "1.0.0",
+  "description": "React test",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Alisa Novikova",
+  "license": "MIT"
+}
