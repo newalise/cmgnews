@@ -31,6 +31,11 @@ var Articles = React.createClass({
         };
     },
 
+    readmoreClick: function (e) {
+        e.preventDefault();
+        this.setState({visible: true});
+    },
+
     render: function () {
         var author = this.props.data.author,
             text = this.props.data.text,
@@ -40,7 +45,7 @@ var Articles = React.createClass({
             <div className="article">
                 <p className="news__author">{author}</p>
                 <p className="news__text">{text}</p>
-                <a href="#" className={'news__readmore ' + (visible ? 'none' : '')}>Подробнее</a>
+                <a href="#" onClick={this.readmoreClick} className={'news__readmore ' + (visible ? 'none' : '')}>Подробнее</a>
                 <p className={'news__big-text ' + (visible ? '' : 'none')}>{bigText}</p>
             </div>
         )
@@ -77,11 +82,30 @@ var News = React.createClass({
     }
 });
 
+var TestInput = React.createClass({
+    onBtnClickHandler: function (e) {
+        alert(ReactDOM.findDOMNode(this.refs.myTestInput).value)
+    },
+
+    render: function () {
+
+        return (
+            <div>
+                <input className='test-input' defaultValue=''
+                       placeholder="введите значение" ref='myTestInput'/>
+                <button onClick={this.onBtnClickHandler}>кнопка</button>
+            </div>
+        )
+    }
+});
+
 var App = React.createClass({
     render: function () {
         return (
             <div className="app">
                 <h3>Новости</h3>
+                <TestInput/>
+                <newButton/>
                 <News data={my_news}/>
             </div>
         );
