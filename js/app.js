@@ -16,6 +16,8 @@ var my_news = [
     }
 ];
 
+window.ee = new EventEmitter();
+
 var Articles = React.createClass({
         propTypes: {
             data: React.PropTypes.shape({
@@ -89,7 +91,6 @@ var News = React.createClass({
         );
     }
 });
-
 var Add = React.createClass({
     componentDidMount: function () {
         ReactDOM.findDOMNode(this.refs.author).focus();
@@ -98,8 +99,17 @@ var Add = React.createClass({
     onBtnClickHandler: function (e) {
         e.preventDefault();
         var author = ReactDOM.findDOMNode(this.refs.author).value;
-        var text = ReactDOM.findDOMNode(this.refs.text).value;
-        alert(author + '\n' + text);
+        var TextEm = ReactDOM.findDOMNode(this.refs.text);
+        var text = TextEm.value;
+        var item = [{
+            author: author,
+            text: text,
+            bigText: '...'
+        }];
+
+        window.ee.emit('News.add', item);
+        TextEm.value = '';
+        this.setState({textIsEmpty: true});
     },
 
     getInitialState: function () {
@@ -148,16 +158,32 @@ var Add = React.createClass({
             </form>
         )
     }
-});
 
+});
 var App = React.createClass({
+    getInitialState: function () {
+        return {
+            news: my_news
+        };
+    },
+    componentDidMount: function () {
+        var self = this;
+        window.ee.addListener('News.add', function (item) {
+            var nextNews = item.concat(self.state.news);
+            self.setState({news: nextNews});
+        })
+    },
+    componentWillUnmount: function () {
+        window.ee.removeListener('News.add');
+    },
     render: function () {
+        console.log('log');
         return (
             <div className="app">
                 <h3>Новости</h3>
                 <Add/>
                 <newButton/>
-                <News data={my_news}/>
+                <News data={this.state.news}/>
             </div>
         );
     }
