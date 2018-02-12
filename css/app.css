@@ -1,5 +1,6 @@
 body {
     background-color: #fff;
+    text-align: center;
 }
 
 .article {
@@ -7,10 +8,34 @@ body {
     -webkit-box-shadow: 0px 0px 26px -8px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 0px 0px 26px -8px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 26px -8px rgba(0, 0, 0, 0.75);
-    margin: 20px 0 20px 0;
+    margin: 20px auto 20px auto;
     padding: 10px;
+    text-align: left;
 }
 
 .none {
     display: none !important;
+}
+
+.close-more {
+    display: block;
+}
+
+form {
+    width: 400px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+input:not([type=checkbox]), textarea, button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.form__group:not(:first-child) {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
